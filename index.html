@@ -1,0 +1,271 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Kirana Store</title>
+ <style>
+    /* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+nav {
+  margin-top: 0.5rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-size: 1rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Categories Section */
+.categories {
+  padding: 2rem;
+  text-align: center;
+}
+
+.categories h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.categories ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.categories li {
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: white;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.categories li:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.categories img {
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.categories span {
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #555;
+}
+
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+footer p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+}
+ </style>
+</head>
+<body>
+  <header>
+    <h1>Online Kirana Store</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="#">My Account</a>
+      <a href="cart.html">My cart</a>
+      <a href="admin.html">Admin Login</a> <!-- Admin Login Link -->
+    </nav>
+  </header>
+
+  <section class="categories">
+    <h2>Browse Categories</h2>
+    <ul>
+      <li onclick="goToCategory('grains', 'gran.webp', 'Grains')">
+        <img src="gran.webp" height="200" width="200">
+        <span>Grains</span>
+      </li>
+      <li onclick="goToCategory('oil', 'oil&dalda.webp', 'Oil & Dalda')">
+        <img src="oil&dalda.webp" height="200" width="200">
+        <span>Oil & Dalda</span>
+      </li>
+      <li onclick="goToCategory('pickles', 'pickles&papad.webp', 'Pickles & Papad')">
+        <img src="pickles&papad.webp" height="200" width="200">
+        <span>Pickles & Papad</span>
+      </li>
+      <li onclick="goToCategory('tea', 'tea.webp', 'Tea')">
+        <img src="tea.webp" height="200" width="200">
+        <span>Tea</span>
+      </li>
+      <li onclick="goToCategory('coffee', 'coffee.webp', 'Coffee')">
+        <img src="coffee.webp" height="200" width="200">
+        <span>Coffee</span>
+      </li>
+      <li onclick="goToCategory('dairy', 'deary.webp', 'Dairy')">
+        <img src="deary.webp" height="200" width="200">
+        <span>Dairy</span>
+      </li>
+      <li onclick="goToCategory('healthdrinks', 'helthdrinks.webp', 'Health Drinks')">
+        <img src="helthdrinks.webp" height="200" width="200">
+        <span>Health Drinks</span>
+      </li>
+      <li onclick="goToCategory('breakfast', 'berakfast.webp', 'Breakfast')">
+        <img src="berakfast.webp" height="200" width="200">
+        <span>Breakfast</span>
+      </li>
+      <li onclick="goToCategory('bodyfood', 'bodyfood.webp', 'Body Food')">
+        <img src="bodyfood.webp" height="200" width="200">
+        <span>Body Food</span>
+      </li>
+      <li onclick="goToCategory('breads', 'breadsbun.webp', 'Breads & Buns')">
+        <img src="breadsbun.webp" height="200" width="200">
+        <span>Breads & Buns</span>
+      </li>
+      <li onclick="goToCategory('biscuits', 'biscuits.webp', 'Biscuits')">
+        <img src="biscuits.webp" height="200" width="200">
+        <span>Biscuits</span>
+      </li>
+      <li onclick="goToCategory('jams', 'james.webp', 'Jams')">
+        <img src="james.webp" height="200" width="200">
+        <span>Jams</span>
+      </li>
+      <li onclick="goToCategory('softdrinks', 'softdrinks.webp', 'Soft Drinks')">
+        <img src="softdrinks.webp" height="200" width="200">
+        <span>Soft Drinks</span>
+      </li>
+      <li onclick="goToCategory('pooja', 'poojaneeds.webp', 'Pooja Needs')">
+        <img src="poojaneeds.webp" height="200" width="200">
+        <span>Pooja Needs</span>
+      </li>
+      <li onclick="">
+
+      </li>
+      <!-- Continue this for all remaining images you listed... -->
+      
+      <!-- Add more as needed... -->
+    </ul>
+  </section>
+
+  <footer>
+    <p>Contact: 9125761298</p>
+    <p>&copy; 2025 OnDelivery Kirana General Stores. Website by MR. PRINCE BHASKAR</p>
+  </footer>
+
+  <script>
+
+
+    const productList = document.getElementById('productList');
+    const addProductForm = document.getElementById('addProductForm');
+    const productImageInput = document.getElementById('productImage');
+  
+    // Load existing products from localStorage
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+  
+    // Initial render
+    displayProducts();
+  
+    addProductForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+  
+      const name = document.getElementById('productName').value;
+      const price = document.getElementById('productPrice').value;
+      const stock = parseInt(document.getElementById('productStock').value);
+      const imageFile = productImageInput.files[0];
+  
+      if (!imageFile) return;
+  
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const newProduct = {
+          name,
+          price,
+          stock,
+          image: event.target.result // using Base64 Data URL
+        };
+  
+        products.push(newProduct);
+        localStorage.setItem('products', JSON.stringify(products));
+        displayProducts();
+        addProductForm.reset();
+      };
+  
+      reader.readAsDataURL(imageFile);
+    });
+  
+    function displayProducts() {
+      productList.innerHTML = '';
+      products.forEach((product, index) => {
+        const div = document.createElement('div');
+        div.className = 'product-item';
+        div.innerHTML = `
+          <div>
+            <img src="${product.image}" height="50" style="margin-right: 10px;" />
+            <strong>${product.name}</strong> - ₹${product.price} -
+            <span class="${product.stock === 0 ? 'out-of-stock' : ''}">
+              ${product.stock === 0 ? 'Out of Stock' : 'Stock: ' + product.stock}
+            </span>
+          </div>
+          <div>
+            <button onclick="removeProduct(${index})">Delete</button>
+          </div>
+        `;
+        productList.appendChild(div);
+      });
+    }
+  
+    function removeProduct(index) {
+      products.splice(index, 1);
+      localStorage.setItem('products', JSON.stringify(products));
+      displayProducts();
+    }
+    function goToCategory(categoryId, image, title) {
+  const categoryInfo = {
+    id: categoryId,
+    title: title
+  };
+  localStorage.setItem('selectedCategory', JSON.stringify(categoryInfo));
+  window.location.href = 'category.html';
+}
+
+  </script>
+  
+</body>
+</html>

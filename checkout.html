@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout - Online Kirana Store</title>
+ <style>
+    /* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+h1, h2 {
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Total Price */
+.total-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: right;
+  margin-bottom: 1rem;
+}
+
+/* Form Styles */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+form input, form textarea, form select {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+form button {
+  padding: 0.75rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #45a049;
+}
+
+/* Payment Method Section */
+div label[for="paymentMethod"] {
+  font-weight: bold;
+}
+
+div select {
+  margin-bottom: 1rem;
+}
+
+div button {
+  padding: 0.75rem;
+  background-color: #00ff66;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+div button:hover {
+  background-color: #000000;
+}
+ </style>
+</head>
+<body>
+  <header>
+    <h1>Checkout</h1>
+  </header>
+  <div class="container">
+    <h2>Order Summary</h2>
+    <table id="cartTable">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Cart items will appear here -->
+      </tbody>
+    </table>
+    <div class="total-price" id="totalPrice">
+      Total: ₹0
+    </div>
+
+    <h2>Order Details</h2>
+    <form id="checkoutForm">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required />
+      </div>
+      <div>
+        <label for="mobile">Mobile Number</label>
+        <input type="tel" id="mobile" placeholder="Enter your mobile number" required />
+      </div>
+      <div>
+        <label for="pincode">Pincode</label>
+        <input type="text" id="pincode" placeholder="Enter your pincode" required />
+      </div>
+      <div>
+        <label for="address">Address</label>
+        <textarea id="address" rows="4" placeholder="Enter your address" required></textarea>
+      </div>
+      <button type="submit">Place Order</button>
+    </form>
+    <div class="paymentMethod">
+        <label for="paymentMethod">Payment Method:</label>
+        <select id="paymentMethod" required>
+          <option value="" disabled selected>Select a payment method</option>
+          <option value="cash">Cash on Delivery</option>
+          <option value="upi">UPI / QR Code</option>
+        </select>
+        <button type="button" onclick="confirmPayment()">Confirm Payment Method</button>
+    </div>
+  </div>
+
+  <script>
+    
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartTable = document.getElementById('cartTable').querySelector('tbody');
+    const totalPriceElement = document.getElementById('totalPrice');
+    const checkoutForm = document.getElementById('checkoutForm');
+
+    function displayCartTable() {
+      cartTable.innerHTML = '';
+      if (cart.length === 0) {
+        cartTable.innerHTML = '<tr><td colspan="5">Your cart is empty.</td></tr>';
+        totalPriceElement.textContent = 'Total: ₹0';
+        return;
+      }
+
+      let total = 0;
+
+      cart.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.category}</td>
+          <td>${item.name}</td>
+          <td>${item.quantity}</td>
+          <td>₹${item.price}</td>
+          <td>₹${item.price * item.quantity}</td>
+        `;
+        cartTable.appendChild(row);
+        total += item.price * item.quantity;
+      });
+
+      totalPriceElement.textContent = `Total: ₹${total}`;
+    }
+
+    // Handle form submission
+    checkoutForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const mobile = document.getElementById('mobile').value;
+      const pincode = document.getElementById('pincode').value;
+      const address = document.getElementById('address').value;
+
+      if (!name || !mobile || !pincode || !address) {
+        alert('Please fill in all the fields.');
+        return;
+      }
+
+      // Prepare WhatsApp message
+      let message = `Order Details:\nName: ${name}\nMobile: ${mobile}\nPincode: ${pincode}\nAddress: ${address}\n\nCart Summary:\n`;
+      let total = 0;
+
+      cart.forEach(item => {
+        message += `${item.name} - ₹${item.price} x ${item.quantity}\n`;
+        total += item.price * item.quantity;
+      });
+
+      message += `\nTotal: ₹${total}`;
+
+      // Send message via WhatsApp
+      const whatsappNumber = '9125761298';
+      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, '_blank');
+    });
+
+
+
+  function confirmPayment() {
+    const paymentMethod = document.getElementById('paymentMethod').value;
+
+    if (!paymentMethod) {
+      alert('Please select a payment method.');
+      return;
+    }
+
+    if (paymentMethod === 'cash') {
+      alert('You have selected Cash on Delivery.');
+    } else if (paymentMethod === 'upi') {
+      alert('You have selected UPI / QR Code. Please scan the QR code to complete the payment.');
+      window.open('qr.jpg', '_blank'); // Opens the QR code image in a new tab
+    }
+  }
+    
+
+    // Initialize cart table
+    displayCartTable();
+  </script>
+</body>
+</html>

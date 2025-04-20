@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login - Online Kirana Store</title>
+  <style>
+    /* Admin Login Page Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 300px;
+    }
+
+    .login-container h2 {
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      color: #333;
+    }
+
+    .login-container .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .login-container button:hover {
+      background-color: #45a049;
+    }
+
+    .forgot-password {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #007BFF;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .forgot-password:hover {
+      color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container" id="login-form">
+    <h2>Admin Login</h2>
+    <div class="error" id="error-message"></div>
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="login()">Login</button>
+    <div class="forgot-password" onclick="showForgotPassword()">Forgot Password?</div>
+  </div>
+
+  <div class="login-container" id="forgot-password-form" style="display: none;">
+    <h2>Reset Password</h2>
+    <div class="error" id="otp-error-message"></div>
+    <input type="text" id="phone-number" placeholder="Enter your phone number" required />
+    <button onclick="sendOTP()">Send OTP</button>
+    <input type="text" id="otp" placeholder="Enter OTP" style="display: none;" />
+    <input type="password" id="new-password" placeholder="Enter new password" style="display: none;" />
+    <button onclick="resetPassword()" style="display: none;" id="reset-button">Reset Password</button>
+
+  </div>
+  
+
+  <script>
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMessage = document.getElementById('error-message');
+
+      if (username === 'prince' && password === '8112403850') {
+        window.location.href = 'dasboard.html';
+      } else {
+        errorMessage.textContent = 'Invalid username or password';
+        errorMessage.style.display = 'block';
+      }
+    }
+
+    function showForgotPassword() {
+      document.getElementById('login-form').style.display = 'none';
+      document.getElementById('forgot-password-form').style.display = 'block';
+    }
+
+    function sendOTP() {
+      const phoneNumber = document.getElementById('phone-number').value;
+      const otpErrorMessage = document.getElementById('otp-error-message');
+
+      if (phoneNumber === '9125761298') {
+        otpErrorMessage.textContent = 'OTP sent to your phone number';
+        otpErrorMessage.style.color = 'green';
+        otpErrorMessage.style.display = 'block';
+
+        document.getElementById('otp').style.display = 'block';
+        document.getElementById('new-password').style.display = 'block';
+        document.getElementById('reset-button').style.display = 'block';
+      } else {
+        otpErrorMessage.textContent = 'Invalid phone number';
+        otpErrorMessage.style.color = 'red';
+        otpErrorMessage.style.display = 'block';
+      }
+    }
+
+    function resetPassword() {
+      const otp = document.getElementById('otp').value;
+      const newPassword = document.getElementById('new-password').value;
+      const otpErrorMessage = document.getElementById('otp-error-message');
+
+      if (otp === '123456') { // Example OTP for demonstration
+        otpErrorMessage.textContent = 'Password reset successfully';
+        otpErrorMessage.style.color = 'green';
+        otpErrorMessage.style.display = 'block';
+
+        // Redirect back to login form
+        setTimeout(() => {
+          document.getElementById('forgot-password-form').style.display = 'none';
+          document.getElementById('login-form').style.display = 'block';
+        }, 2000);
+      } else {
+        otpErrorMessage.textContent = 'Invalid OTP';
+        otpErrorMessage.style.color = 'red';
+        otpErrorMessage.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

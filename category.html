@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Category Page - Online Kirana Store</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .container {
+      padding: 2rem;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+    }
+
+    .product-list {
+      background-color: white;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .product-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .product-item img {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .out-of-stock {
+      color: red;
+      font-weight: bold;
+    }
+
+    .product-details {
+      display: flex;
+      align-items: center;
+    }
+    .cart{
+    text-align: center;
+    margin-top: 5rem;
+    font-size: 3rem;
+    font-weight: bold;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Category Page</h1>
+  </header>
+  <div class="container">
+    <h2>Products by Category</h2>
+    <div class="product-list" id="productList">
+      <!-- Products will appear here -->
+    </div>
+  </div>
+  <div class="cart">
+    <a href="cart.html">Go to you cart</a>
+  </div>
+
+  <script>
+    const productList = document.getElementById('productList');
+
+    // Fetch data from localStorage
+    const productsByCategory = JSON.parse(localStorage.getItem('productsByCategory')) || {};
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function saveCartToLocalStorage() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function displayProducts() {
+      productList.innerHTML = '';
+      if (Object.keys(productsByCategory).length === 0) {
+        productList.innerHTML = '<p>No products available.</p>';
+        return;
+      }
+
+      for (const category in productsByCategory) {
+        const categoryHeading = document.createElement('h3');
+        categoryHeading.textContent = category.toUpperCase();
+        productList.appendChild(categoryHeading);
+
+        productsByCategory[category].forEach((product, index) => {
+          const div = document.createElement('div');
+          div.className = 'product-item';
+          div.innerHTML = `
+            <div class="product-details">
+              <img src="${product.imageSrc}" alt="${product.name}" />
+              <div>
+                <strong>${product.name}</strong> - ₹${product.price} - 
+                <span class="${product.stock === 0 ? 'out-of-stock' : ''}">
+                  ${product.stock === 0 ? 'Out of Stock' : 'Stock: ' + product.stock}
+                </span>
+                <br><small>Category: ${product.category}</small>
+              </div>
+            </div>
+            <div>
+              <button onclick="addToCart('${category}', ${index})" ${product.stock === 0 ? 'disabled' : ''}>
+                Add to Cart
+              </button>
+            </div>
+          `;
+          productList.appendChild(div);
+        });
+      }
+    }
+
+    function addToCart(category, index) {
+      const product = productsByCategory[category][index];
+
+      // Check if product is already in the cart
+      const existingProduct = cart.find(
+        (item) => item.name === product.name && item.category === product.category
+      );
+
+      if (existingProduct) {
+        alert('This product is already in the cart.');
+        return;
+      }
+
+      // Add product to cart
+      cart.push(product);
+      saveCartToLocalStorage();
+      alert(`${product.name} has been added to the cart.`);
+    }
+
+    // Initial Load
+    displayProducts();
+  </script>
+</body>
+</html>
